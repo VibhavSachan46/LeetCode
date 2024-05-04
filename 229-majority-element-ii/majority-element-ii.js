@@ -2,53 +2,42 @@
  * @param {number[]} nums
  * @return {number[]}
  */
-var majorityElement = function(nums) {
-    let m1=nums[0];
-    let m2=null;
-    let count1 = 1;
-    let count2 = 0;
-    let res=[];
+var majorityElement = function (nums) {
+    let el1 = 0, el2 = 0, c1 = 0, c2 = 0
 
-    for(let i=1;i<nums.length;i++){
-
-        if(m1 == nums[i]){
-            count1++;
-        }else if(m2 == nums[i]){
-            count2++;
-        }else if(count1==0){
-            m1=nums[i];
-            count1=1;
-        }else if(count2==0){
-            m2=nums[i];
-            count2=1;
-        }else{
-            count1--;
-            count2--;
+    for (let i = 0; i < nums.length; i++) {
+        if (c1 == 0 && el2 != nums[i]) {
+            el1 = nums[i]
+            c1 = 1
         }
-
-    }
-
-    let c1=0;
-    let c2=0;
-
-    for(let i=0;i<nums.length;i++){
-        if(m1 == nums[i]){
-            c1++;
+        else if (c2 == 0 && el1 != nums[i]) {
+            el2 = nums[i]
+            c2 = 1
         }
-        if(m2 == nums[i]){
-            c2++;
+        else if (el1 == nums[i]) c1++
+        else if (el2 == nums[i]) c2++
+        else {
+            c1--
+            c2--
         }
     }
 
-    if(c1>nums.length/3){
-        res.push(m1);
+    c1=0
+    c2=0
+    for (let i = 0; i < nums.length; i++) {
+        if (nums[i] == el1) c1++
+        if (el2 == nums[i]) c2++
+    }
+    console.log("C1 is ",c1)
+    console.log("C2 is ",c2)
+
+    let res = []
+    if (c1 > nums.length / 3) {
+        res.push(el1)
+    }
+    if (c2 > nums.length / 3 && el1 != el2) {
+        res.push(el2)
     }
 
-    if(c2>nums.length/3){
-        res.push(m2);
-    }
-
-
-    return res;
-
+    return res
 };
