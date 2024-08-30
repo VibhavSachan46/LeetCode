@@ -3,12 +3,17 @@
  * @return {number}
  */
 var maxSubArray = function (nums) {
-    let max = nums[0];
+    if (nums.length == 1) return nums[0]
     let cur = 0
+    let max = nums[0]
 
     for (let i = 0; i < nums.length; i++) {
         cur = cur + nums[i]
-        max = Math.max(max, cur)
+
+        if (cur > max) {
+            max = cur
+        }
+
         if (cur < 0) {
             cur = 0
         }
